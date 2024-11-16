@@ -29,18 +29,3 @@ setup(
     packages=find_packages(),
     install_requires=["pandas", "numpy", "seaborn"],
 )
-
-
-import pkg_resources
-
-with open("requirements.txt") as file:
-    requirements = file.read().splitlines()
-
-for requirement in requirements:
-    try:
-        pkg_resources.require(requirement)
-        print(f"{requirement} is installed")
-    except pkg_resources.DistributionNotFound:
-        print(f"{requirement} is NOT installed")
-    except pkg_resources.VersionConflict as e:
-        print(f"{requirement} version conflict: {e}")
