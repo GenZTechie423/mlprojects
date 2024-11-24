@@ -1,7 +1,13 @@
 import logging
+import sys
 import os
 from datetime import datetime
-from exceptions import CustomException
+
+project_root = os.path.abspath("C:/Users/sudhr/Downloads/mlprojects")
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+from src.exceptions import CustomException
 import sys
 
 # Create a unique log file name using the current timestamp
