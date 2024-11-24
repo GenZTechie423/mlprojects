@@ -10,17 +10,17 @@ if project_root not in sys.path:
 from src.exceptions import CustomException
 import sys
 
+logs_path = os.path.join(os.getcwd(), "logs")
+if not os.path.exists(logs_path):
+    print(f"Creating directory: {logs_path}")
+    os.makedirs(logs_path, exist_ok=True)
+
 # Create a unique log file name using the current timestamp
 LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
 logs_path = os.path.join(
     os.getcwd(), "logs"
 )  # Create a 'logs' directory in the current working directory
 
-try:
-    print(f"Creating directory: {logs_path}")
-    os.makedirs(logs_path, exist_ok=True)  # Create the directory if it doesn't exist
-except Exception as e:
-    print(f"Error creating directory: {e}")
 
 # Full path to the log file
 LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
@@ -32,6 +32,21 @@ logging.basicConfig(
     format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",  # Timestamp|Line No.|Name|Level Name|Message
     level=logging.INFO,
 )
+
+
+# Also log to console
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+formatter = logging.Formatter(
+    "[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s"
+)
+console_handler.setFormatter(formatter)
+logging.getLogger().addHandler(console_handler)
+
+
+# Test logging setup
+logging.info("Logging setup complete.")
+
 
 if __name__ == "__main__":
     print("Logging has started.")
